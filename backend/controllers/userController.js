@@ -66,10 +66,19 @@ const logoutUser = async (req, res) => {
 
 const getUserData = async (req, res) => {
     try {
-        const user = await User.findById();
-
+        const user = await User.findById(req.user._id).select('-password'); // Exclude password
+        if(user) {
+            res.json({
+                id: user._id,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                email: user.email,
+            })
+        } else {
+            res.status(404).json({ message: "Could not find user"});
+        }
     } catch(error) {
-        console.error("Failed to get user data", error);
+        res.status(500).json({ message: error.message });
     }
 }
 
