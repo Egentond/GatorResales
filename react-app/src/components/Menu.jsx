@@ -8,13 +8,13 @@ const Menu = () => {
                 <nav>
                     <ul className='text-xl flex flex-wrap space-x-10 mx-4'>
                         <li className='rounded-md transition delay-75 ease-in hover:bg-blue-700 p-3'>
-                            <Link>Home</Link>
+                            <Link to='/'>Home</Link>
                         </li>
                         <li className='rounded-md transition delay-75 ease-in hover:bg-blue-700 p-3'>
                             <Link>Buy</Link>
                         </li>
                         <li className='rounded-md transition delay-75 ease-in hover:bg-blue-700 p-3'>
-                            <Link>Sell</Link>
+                            <Link to='/list-ticket'>Sell</Link>
                         </li>
                         <li className='rounded-md transition delay-75 ease-in hover:bg-blue-700 p-3'>
                             <Link>Sign in</Link>
