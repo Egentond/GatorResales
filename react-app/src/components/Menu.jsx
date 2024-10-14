@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 
 const Menu = () => {
     return(
@@ -11,16 +11,16 @@ const Menu = () => {
                             <Link to='/'>Home</Link>
                         </li>
                         <li className='rounded-md transition delay-75 ease-in hover:bg-blue-700 p-3'>
-                            <Link>Buy</Link>
+                            <Link to='/buy'>Buy</Link> {/* Link to Buy page */}
                         </li>
                         <li className='rounded-md transition delay-75 ease-in hover:bg-blue-700 p-3'>
-                            <Link to='/list-ticket'>Sell</Link>
+                            <Link to='/sell'>Sell</Link> {/* Updated Sell link to use '/sell' route */}
                         </li>
                         <li className='rounded-md transition delay-75 ease-in hover:bg-blue-700 p-3'>
-                            <Link>Sign in</Link>
+                            <Link to='/sign-in'>Sign in</Link>
                         </li>
                         <li className='rounded-md transition delay-75 ease-in hover:bg-blue-700 p-3'>
-                            <Link>Register</Link>
+                            <Link to='/register'>Register</Link>
                         </li>
                     </ul>
                 </nav>
@@ -30,3 +30,4 @@ const Menu = () => {
 }
 
 export default Menu;
+
