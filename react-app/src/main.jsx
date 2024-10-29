@@ -6,7 +6,6 @@ import './index.css';
 
 import Home from './components/Home.jsx';
 import PageNotFound from './components/PageNotFound.jsx';
-import ListTicket from './components/ListTicket.jsx';
 import PrivateRoute from './components/PrivateRoute.jsx';
 
 import Buy from './components/Buy.jsx';
