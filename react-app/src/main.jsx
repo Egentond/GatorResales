@@ -30,16 +30,6 @@ const router = createBrowserRouter([
     element: <Register />,
     errorElement: <PageNotFound />,
   },
-
-  {
-    path: '/list-ticket',
-    element: (
-      //<PrivateRoute>
-        <ListTicket />
-      //</PrivateRoute>
-    ),
-    errorElement: <PageNotFound />,
-  },
   
   {
     path: '/buy', 
