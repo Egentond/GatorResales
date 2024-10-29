@@ -8,13 +8,22 @@ import Home from './components/Home.jsx';
 import PageNotFound from './components/PageNotFound.jsx';
 import ListTicket from './components/ListTicket.jsx';
 import PrivateRoute from './components/PrivateRoute.jsx';
-import Buy from './components/Buy.jsx'; // Import Buy component
-import Sell from './components/Sell.jsx'; // Import Sell component
+
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <Home />,
+    errorElement: <PageNotFound />,
+  },
+  {
+    path: '/login',
+    element: <Login />,
+    errorElement: <PageNotFound />,
+  },
+  {
+    path: '/register',
+    element: <Register />,
     errorElement: <PageNotFound />,
   },
 
