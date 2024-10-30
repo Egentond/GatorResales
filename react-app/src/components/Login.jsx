@@ -1,18 +1,31 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
-    const [formData, setFormData] = useState({ email: "", password: "" });
+    const [formData, setFormData] = useState({ firstName: "", lastName: "", email: "", password: "" });
+    const [error, setError] = useState("");
+    const [success, setSuccess] = useState("");
+    const navigate = useNavigate();
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setFormData((prevData) => ({ ...prevData, [name]: value }));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // Handle login logic here
-        console.log("Login data:", formData);
-    };
+        e.preventDefault();
+        setError("");
+        setSuccess("");
+        try {
+            const response = await axiosInstance.post("/login", formData);
+            setSuccess("Logged in successfully!");
+            navigate("/");
+        } catch (error) {
+            setError(error.response?.data?.message || "An error occurred.");
+        };
+            console.log("Login data:", formData);
+        };
 
     return (
         <div className="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
@@ -20,6 +33,7 @@ export default function Login() {
                 <h2 className="text-center text-3xl font-bold text-gray-800">Login to Your Account</h2>
                 
                 <form onSubmit={handleSubmit} className="mt-8 space-y-6">
+                        
                     <div>
                         <label className="block text-sm font-medium text-gray-700">Email Address</label>
                         <input
