@@ -11,13 +11,13 @@ const Menu = () => {
                             <Link to='/'>Home</Link>
                         </li>
                         <li className='rounded-md transition delay-75 ease-in hover:bg-blue-700 p-3'>
-                            <Link to='/buy'>Buy</Link> {/* Link to Buy page */}
+                            <Link to='/buy'>Buy</Link> 
                         </li>
                         <li className='rounded-md transition delay-75 ease-in hover:bg-blue-700 p-3'>
-                            <Link to='/sell'>Sell</Link> {/* Updated Sell link to use '/sell' route */}
+                            <Link to='/sell'>Sell</Link> 
                         </li>
                         <li className='rounded-md transition delay-75 ease-in hover:bg-blue-700 p-3'>
-                            <Link to='/sign-in'>Sign in</Link>
+                        <Link to='/login'>Sign in</Link> 
                         </li>
                         <li className='rounded-md transition delay-75 ease-in hover:bg-blue-700 p-3'>
                             <Link to='/register'>Register</Link>
@@ -30,4 +30,5 @@ const Menu = () => {
 }
 
 export default Menu;
+
 
