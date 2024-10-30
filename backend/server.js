@@ -17,11 +17,21 @@ app.use(cors({
 app.use(express.json());
 app.use(cookieParser());
 
-app.use('./api/users', userRoutes);
+app.use('/api/users', require('./routes/userRoutes'));
 
 
 // mongoose.connect(process.env.MONGO_URI)
 // .then(() => console.log('DB connected')).catch(err => console.log(err));
+
+const uri = process.env.MONGODB_URI;
+
+mongoose.connect(uri)
+.then(() => {
+    console.log('Connected to MongoDB');
+})
+.catch(err => {
+    console.error('Error connecting to MongoDB:', err);
+});
 
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
