@@ -22,7 +22,7 @@ export default function Register() {
             const response = await axiosInstance.post("users/register", formData); // Update with your registration endpoint
             console.log("Registration successful:", response.data);
             
-            navigate('/');
+            navigate("/");
         } catch (error) {
             console.error("Registration failed:", error.response?.data?.message || error.message);
             // Show an error message to the user if registration fails
