@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Menu from "./Menu";
+import Footer from "./Footer";
 
 export default function Login() {
     const [formData, setFormData] = useState({ firstName: "", lastName: "", email: "", password: "" });
@@ -28,6 +30,8 @@ export default function Login() {
         };
 
     return (
+        <>
+        <Menu />
         <div className="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
             <div className="max-w-md w-full space-y-8 p-6 bg-white rounded-lg shadow-md">
                 <h2 className="text-center text-3xl font-bold text-gray-800">Login to Your Account</h2>
@@ -43,7 +47,7 @@ export default function Login() {
                             onChange={handleInputChange}
                             className="mt-1 p-2 border border-gray-300 rounded-md w-full focus:ring-gatorsBlue focus:border-gatorsBlue"
                             required
-                        />
+                            />
                     </div>
                     <div>
                         <label className="block text-sm font-medium text-gray-700">Password</label>
@@ -54,7 +58,7 @@ export default function Login() {
                             onChange={handleInputChange}
                             className="mt-1 p-2 border border-gray-300 rounded-md w-full focus:ring-gatorsBlue focus:border-gatorsBlue"
                             required
-                        />
+                            />
                     </div>
 
                     <button type="submit" className="w-full py-2 px-4 bg-indigo-600 text-white rounded-md hover:bg-gatorsBlue focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
@@ -63,5 +67,7 @@ export default function Login() {
                 </form>
             </div>
         </div>
+        <Footer />
+        </>
     );
 }
