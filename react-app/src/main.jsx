@@ -1,53 +1,37 @@
-import { StrictMode } from 'react';
+import { StrictMode, useState } from 'react';
 import { createRoot } from 'react-dom/client';
-import React from 'react';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import './index.css';
 
 import Home from './components/Home.jsx';
+import Login from './components/Login.jsx';
+import Menu from './components/Menu.jsx';
 import PageNotFound from './components/PageNotFound.jsx';
-import PrivateRoute from './components/PrivateRoute.jsx';
-
 import Buy from './components/Buy.jsx';
 import Sell from './components/Sell.jsx';
-import Login from './components/Login.jsx';
 import Register from './components/Register.jsx';
 
+function MainApp() {
+  const [loggedIn, setLoggedIn] = useState(false); 
 
-const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <Home />,
-    errorElement: <PageNotFound />,
-  },
-  {
-    path: '/login',
-    element: <Login />,
-    errorElement: <PageNotFound />,
-  },
-  {
-    path: '/register',
-    element: <Register />,
-    errorElement: <PageNotFound />,
-  },
-  
-  {
-    path: '/buy', 
-    element: <Buy />,
-    errorElement: <PageNotFound />,
-  },
+  return (
+    <StrictMode>
+      <Router>
+        <Menu loggedIn={loggedIn} setLoggedIn={setLoggedIn} /> 
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/buy" element={<Buy />} />
+          <Route path="/sell" element={<Sell />} />
+          <Route path="/register" element={<Register />} />
+          <Route
+            path="/login"
+            element={loggedIn ? <Navigate to="/" /> : <Login setLoggedIn={setLoggedIn} />}
+          />
+          <Route path="*" element={<PageNotFound />} />
+        </Routes>
+      </Router>
+    </StrictMode>
+  );
+}
 
-  {
-    path: '/sell', 
-    element: <Sell />,
-    errorElement: <PageNotFound />,
-  },
-  
-]);
-
-createRoot(document.getElementById('root')).render(
-  <StrictMode>
-    <RouterProvider router={router} />
-  </StrictMode>,
-);
-
+createRoot(document.getElementById('root')).render(<MainApp />);
