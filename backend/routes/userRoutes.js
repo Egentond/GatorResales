@@ -4,7 +4,7 @@ const { registerUser, signInUser, logoutUser, getUserData} = require('../control
 const { protect } = require('../middleware/auth')
 
 router.post('/register', registerUser);
-router.post('/signin', signInUser);
+router.post('/login', signInUser);
 router.post('/logout', protect, logoutUser);
 router.get('/user-data', protect, getUserData);
 
