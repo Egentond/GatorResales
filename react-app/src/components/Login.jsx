@@ -18,15 +18,16 @@ export default function Login({ setLoggedIn }) {
     setError("");
     setSuccess("");
     try {
-        const response = await axiosInstance.post("/users/signin", formData);
+        const response = await axiosInstance.post("/users/login", formData);
+        console.log("successful login")
         setSuccess("Logged in successfully!");
-    } catch (error) {
+        setLoggedIn(true); 
+        navigate('/'); 
+      } catch (error) {
         setError(error.response?.data?.message || "An error occurred.");
         console.error(error)
     };
-    setLoggedIn(true); 
-    navigate('/'); 
-    console.log("Login data:", formData);
+
   };
 
   return (

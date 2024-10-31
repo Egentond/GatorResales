@@ -8,12 +8,12 @@ const Menu = ({ loggedIn, setLoggedIn }) => {
   const handleLogout = async () => {
     try {
       const response = await axiosInstance.post('/users/logout')
+      console.log("successfully logs out")
+      setLoggedIn(false); // Log out the user by setting it to false
+      navigate('/'); // Redirect to home page when the user gets logged out
     } catch(error) {
       console.error(error);
     }
-
-    setLoggedIn(false); // Log out the user by setting it to false
-    navigate('/'); // Redirect to home page when the user gets logged out
   };
 
   return (
