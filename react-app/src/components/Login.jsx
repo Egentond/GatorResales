@@ -26,7 +26,6 @@ export default function Login({ setLoggedIn }) {
       setError(error.response?.data?.message || "An error occurred.");
       console.error(error)
     };
-    
   };
 
   return (
