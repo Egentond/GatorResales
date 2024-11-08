@@ -16,31 +16,29 @@ const Sell = () => {
   const [successMsg, setSuccessMsg] = useState('');
   const [errMsg, setErrMsg] = useState('');
 
-  // Example useEffect to fetch user data if necessary
-  // useEffect(() => {
-  //     const fetchData = async () => {
-  //         try {
-  //             const response = await axiosInstance.get('/users/user-data', {
-  //                 withCredentials: true,
-  //             });
-  //             setUserData(response.data);
-  //         } catch(error) {
-  //             console.error('Failed to fetch user data', error);
-  //         }
-  //     };
-  //     fetchData();
-  // }, []);
+  useEffect(() => {
+      const fetchData = async () => {
+          try {
+              const response = await axiosInstance.get('/users/user-data', {
+                  withCredentials: true,
+              });
+              setUserData(response.data);
+          } catch(error) {
+              console.error('Failed to fetch user data', error);
+          }
+      };
+      fetchData();
+  }, []);
 
-  // Update ticketData based on userData
-  // useEffect(() => {
-  //     if(userData) {
-  //         setTicketData((prevData) => ({
-  //             ...prevData,
-  //             seller: userData._id,
-  //             sellerEmail: userData.email,
-  //         }));
-  //     }
-  // }, [userData]);
+  useEffect(() => {
+      if(userData) {
+          setTicketData((prevData) => ({
+              ...prevData,
+              seller: userData._id,
+              sellerEmail: userData.email,
+          }));
+      }
+  }, [userData]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
