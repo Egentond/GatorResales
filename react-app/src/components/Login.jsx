@@ -18,16 +18,15 @@ export default function Login({ setLoggedIn }) {
     setError("");
     setSuccess("");
     try {
-        const response = await axiosInstance.post("/users/login", formData);
-        console.log("successful login")
-        setSuccess("Logged in successfully!");
-        setLoggedIn(true); 
-        navigate('/'); 
-      } catch (error) {
-        setError(error.response?.data?.message || "An error occurred.");
-        console.error(error)
+      const response = await axiosInstance.post("/users/login", formData);
+      setSuccess("Logged in successfully!");
+      setLoggedIn(true); 
+      navigate('/'); 
+    } catch (error) {
+      setError(error.response?.data?.message || "An error occurred.");
+      console.error(error)
     };
-
+    
   };
 
   return (
@@ -36,6 +35,7 @@ export default function Login({ setLoggedIn }) {
         <h2 className="text-center text-3xl font-bold text-gray-800">Login to Your Account</h2>
         
         <form onSubmit={handleSubmit} className="mt-8 space-y-6">
+          {error && <p className="text-red-500 text-center">{error}</p>}
           <div>
             <label className="block text-sm font-medium text-gray-700">Email Address</label>
             <input
