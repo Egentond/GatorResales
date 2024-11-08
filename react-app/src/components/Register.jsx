@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function Register() {
     const [formData, setFormData] = useState({ firstName: "", lastName: "", email: "", password: "", confirmPassword: "" });
+    const [error, setError] = useState("");
     const navigate = useNavigate();
 
     const handleInputChange = (e) => {
@@ -13,19 +14,25 @@ export default function Register() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setError("");
+
         if (formData.password !== formData.confirmPassword) {
-            console.error("Passwords do not match");
+            setError("Passwords must match");
             return;
         }
-    
+
+        if (!formData.email.endsWith("@ufl.edu")) {
+            setError("You must have a valid UF email to register");
+            return;
+        }
+
         try {
-            const response = await axiosInstance.post("users/register", formData); // Update with your registration endpoint
+            const response = await axiosInstance.post("users/register", formData);
             console.log("Registration successful:", response.data);
-            
             navigate("/");
         } catch (error) {
-            console.error("Registration failed:", error.response?.data?.message || error.message);
-            // Show an error message to the user if registration fails
+            setError(error.response?.data?.message || "An error occurred.");
+            console.error(error);
         }
     };
 
@@ -35,6 +42,7 @@ export default function Register() {
                 <h2 className="text-center text-3xl font-bold text-gray-800">Create a New Account</h2>
                 
                 <form onSubmit={handleSubmit} className="mt-8 space-y-6">
+                    {error && <p className="text-red-500 text-center">{error}</p>}
                     <div>
                         <label className="block text-sm font-medium text-gray-700">First Name</label>
                         <input
