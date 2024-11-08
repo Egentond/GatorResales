@@ -16,13 +16,11 @@ export default function Register() {
         e.preventDefault();
         setError("");
 
-        // Check if passwords match
         if (formData.password !== formData.confirmPassword) {
-            setError("Passwords do not match");
+            setError("Passwords must match");
             return;
         }
 
-        // Check if email ends with @ufl.edu
         if (!formData.email.endsWith("@ufl.edu")) {
             setError("You must have a valid UF email to register");
             return;
