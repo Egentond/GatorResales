@@ -57,9 +57,6 @@ const signInUser = async (req, res) => {
             return res.status(400).json({ message: "User does not exist" });
         }
 
-        console.log("Entered password:", password);
-        console.log("Stored hashed password:", user.password);
-
         // Compare the entered password with the hashed password
         const isPasswordCorrect = await user.matchPassword(password);
 
@@ -100,20 +97,18 @@ const logoutUser = async (req, res) => {
             return res.status(400).json({ message: "No token provided" });
         }
 
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);  // Decode the token
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);  
 
-        // Find the user by ID if necessary
-        const user = await User.findById(decoded.id);  // Assuming you want to log the user out
+        const user = await User.findById(decoded.id);  
         if (!user) {
             return res.status(400).json({ message: "User not found" });
         }
 
-        // Clear the cookie by setting a very short expiration time
         res.cookie('token', '', { 
             httpOnly: true, 
             secure: process.env.NODE_ENV === 'production',  // Only secure in production
             sameSite: 'strict', 
-            maxAge: 1  // This clears the cookie immediately
+            maxAge: 1  
         });
 
         // Send a success message
@@ -127,7 +122,7 @@ const logoutUser = async (req, res) => {
 
 const getUserData = async (req, res) => {
     try {
-        const user = await User.findById(req.user._id).select('-password'); // Exclude password
+        const user = await User.findById(req.user._id).select('-password'); 
         if(user) {
             res.json({
                 id: user._id,
