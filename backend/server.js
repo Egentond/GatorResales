@@ -18,10 +18,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use('/api/users', require('./routes/userRoutes'));
-
-
-// mongoose.connect(process.env.MONGO_URI)
-// .then(() => console.log('DB connected')).catch(err => console.log(err));
+app.use('/api/tickets', require('./routes/ticketRoutes'));
 
 const uri = process.env.MONGODB_URI;
 

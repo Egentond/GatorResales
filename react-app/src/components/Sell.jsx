@@ -6,7 +6,6 @@ const Sell = () => {
   const [userData, setUserData] = useState(null);
   const [ticketData, setTicketData] = useState({
     seller: '',
-    sellerEmail: '',
     buyer: '',
     title: '',
     description: '',
@@ -32,10 +31,10 @@ const Sell = () => {
 
   useEffect(() => {
       if(userData) {
+          console.log(userData);
           setTicketData((prevData) => ({
               ...prevData,
-              seller: userData._id,
-              sellerEmail: userData.email,
+              seller: userData.id || '',
           }));
       }
   }, [userData]);
@@ -48,28 +47,26 @@ const Sell = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    const formData = new FormData();
-    Object.entries(ticketData).forEach(([key, value]) => {
-      formData.append(key, value);
-    });
-
+  
     try {
-      const response = await axiosInstance.post('', formData, {
-        headers: { 'Content-Type': 'multipart/form-data' },
+      const response = await axiosInstance.post('/tickets/list-ticket', ticketData, {
+        headers: { 'Content-Type': 'application/json' },
       });
       setSuccessMsg('Ticket listing posted successfully.');
       setErrMsg('');
-      console.log(response.data);
-
-      setTicketData((prevData) => ({
-        ...prevData,
-      }));
+  
+      setTicketData({
+        ...ticketData,
+        title: '',
+        description: '',
+        price: '',
+      });
     } catch (error) {
       console.error('Error posting listing:', error);
       setErrMsg('Failed to post listing.');
     }
   };
+  
 
   return (
     <>
@@ -85,13 +82,9 @@ const Sell = () => {
           )}
 
           <form onSubmit={handleSubmit} className="space-y-6">
-            <div>
-              <label className="block text-sm font-medium text-gray-700">The seller's (your) email</label>
-              {/* <p className="text-gray-500">{ticketData.sellerEmail}</p> */}
-            </div>
             
             <div>
-              <label className="block text-sm font-medium text-gray-700">Set a title for the ticket you are selling</label>
+              <label className="block text-sm font-medium text-gray-700">Set a title for the ticket you are selling: </label>
               <input 
                 className="mt-1 p-2 border border-gray-300 rounded-md w-full focus:ring-gatorsBlue focus:border-gatorsBlue"
                 type="text"
@@ -102,12 +95,24 @@ const Sell = () => {
             </div>
             
             <div>
-              <label className="block text-sm font-medium text-gray-700">Write a description of the ticket you are selling</label>
+              <label className="block text-sm font-medium text-gray-700">Write a description of the ticket you are selling: </label>
               <input 
                 className="mt-1 p-2 border border-gray-300 rounded-md w-full focus:ring-gatorsBlue focus:border-gatorsBlue"
                 type="text"
                 name="description"
                 value={ticketData.description}
+                onChange={handleInputChange}
+              />
+            </div>
+            
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Price ($): </label>
+              <input 
+                className="mt-1 p-2 border border-gray-300 rounded-md w-full focus:ring-gatorsBlue focus:border-gatorsBlue"
+                type="number"
+                name="price"
+                min={0.00}
+                value={ticketData.price}
                 onChange={handleInputChange}
               />
             </div>
