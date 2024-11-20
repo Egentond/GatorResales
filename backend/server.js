@@ -19,6 +19,7 @@ app.use(cookieParser());
 
 app.use('/api/users', require('./routes/userRoutes'));
 app.use('/api/tickets', require('./routes/ticketRoutes'));
+app.use('/stripe', require('./routes/stripeRoutes'));
 
 const uri = process.env.MONGODB_URI;
 
