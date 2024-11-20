@@ -1,5 +1,7 @@
 const User = require("../models/User");
 const jwt = require("jsonwebtoken");
+const crypto = require('crypto');
+const nodemailer = require('nodemailer'); 
 
 
 const generateToken = (id) => {
@@ -133,6 +135,49 @@ const getUserData = async (req, res) => {
         } else {
             res.status(404).json({ message: "Could not find user"});
         }
+    } catch(error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+
+const resetPassword = async (req, res) => {
+    try {
+        const { email } = req.body;
+
+        const user = await User.findOne({email});
+        if(!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        const resetToken = user.generateResetToken();        
+
+        await user.save();
+
+        const resetURL = `${req.protocol}://${req.get(
+            'host'
+        )}/api/users/reset-password/${resetToken}`;
+
+        // Send the token to the user via email
+        const transporter = nodemailer.createTransport({
+            service: 'Gmail',
+            auth: {
+                user: process.env.EMAIL_USER,
+                pass: process.env.EMAIL_PASS,
+            },
+        });
+
+        const mailOptions = {
+            from: '"YourApp Support" <support@yourapp.com>',
+            to: user.email,
+            subject: 'Password Reset Request',
+            html: `<p>You requested a password reset.</p>
+                   <p>Click the link below to reset your password:</p>
+                   <a href="${resetURL}">Reset Password</a>`,
+        };
+
+        await transporter.sendMail(mailOptions);
+
+        res.status(200).json({ message: "Password reset link sent to your email" });
     } catch(error) {
         res.status(500).json({ message: error.message });
     }
