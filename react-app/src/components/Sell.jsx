@@ -8,6 +8,7 @@ const Sell = () => {
     seller: '',
     buyer: '',
     title: '',
+    sport: '',
     description: '',
     price: '',
     status: '',
@@ -58,6 +59,7 @@ const Sell = () => {
       setTicketData({
         ...ticketData,
         title: '',
+        sport: '',
         description: '',
         price: '',
       });
@@ -84,7 +86,7 @@ const Sell = () => {
           <form onSubmit={handleSubmit} className="space-y-6">
             
             <div>
-              <label className="block text-sm font-medium text-gray-700">Set a title for the ticket you are selling: </label>
+              <label className="block text-sm font-medium text-gray-700">Set a <b>TITLE</b> for the ticket you are selling: </label>
               <input 
                 className="mt-1 p-2 border border-gray-300 rounded-md w-full focus:ring-gatorsBlue focus:border-gatorsBlue"
                 type="text"
@@ -95,7 +97,18 @@ const Sell = () => {
             </div>
             
             <div>
-              <label className="block text-sm font-medium text-gray-700">Write a description of the ticket you are selling: </label>
+              <label className="block text-sm font-medium text-gray-700">What <b>SPORTS GAME</b> is this ticket for </label>
+              <input 
+                className="mt-1 p-2 border border-gray-300 rounded-md w-full focus:ring-gatorsBlue focus:border-gatorsBlue"
+                type="text"
+                name="sport"
+                value={ticketData.sport}
+                onChange={handleInputChange}
+              />
+            </div>
+            
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Write a <b>DESCRIPTION</b> of the ticket you are selling: </label>
               <input 
                 className="mt-1 p-2 border border-gray-300 rounded-md w-full focus:ring-gatorsBlue focus:border-gatorsBlue"
                 type="text"
@@ -106,7 +119,7 @@ const Sell = () => {
             </div>
             
             <div>
-              <label className="block text-sm font-medium text-gray-700">Price ($): </label>
+              <label className="block text-sm font-medium text-gray-700"><b>PRICE</b> ($): </label>
               <input 
                 className="mt-1 p-2 border border-gray-300 rounded-md w-full focus:ring-gatorsBlue focus:border-gatorsBlue"
                 type="number"

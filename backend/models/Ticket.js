@@ -7,6 +7,7 @@ const ticketSchema = new mongoose.Schema({
     sellerEmail: {type: String},
     buyer: {type: String},
     title: {type: String, required: true},
+    sport: {type: String, required: true},
     description: {type: String, required: true},
     price: {type: Number, required: true},
     status: {type: String, default: 'open'},
