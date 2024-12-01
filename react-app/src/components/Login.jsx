@@ -19,8 +19,9 @@ export default function Login({ setLoggedIn }) {
     setSuccess("");
     try {
       const response = await axiosInstance.post("/users/login", formData);
+      localStorage.setItem('loggedIn', 'true'); // Store login state in localStorage
       setSuccess("Logged in successfully!");
-      setLoggedIn(true); 
+      setLoggedIn(true);
       navigate('/'); 
     } catch (error) {
       setError(error.response?.data?.message || "An error occurred.");
