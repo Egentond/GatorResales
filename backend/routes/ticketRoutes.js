@@ -4,7 +4,7 @@ const { listTicket, getTicket, filterTicketsBySport, getAllTickets } = require('
 const { protect } = require('../middleware/auth')
 
 router.post('/list-ticket', listTicket);
-router.get('/get-ticket', getTicket);
+router.get('/get-ticket/:id', getTicket);
 router.get('/get-all-tickets', getAllTickets);
 router.get('/get-tickets-by-sport', filterTicketsBySport);
 
