@@ -8,6 +8,16 @@ import gatorsWmsBasketball from '../assets/gators-womens-basketball.jpg';
 
 
 const Home = () => {
+
+  const filterTickets = (sport) => {
+    try {
+
+    } catch(error) {
+      console.error(error);
+    }
+  }
+
+
   return (
     <>
       <div className="relative h-screen min-h-screen bg-cover bg-center" style={{ backgroundImage: `url(${gatorCountry})` }}>

@@ -10,7 +10,7 @@ const Buy = ({ loggedIn }) => { // Accept loggedIn as a prop
   useEffect(() => {
     const fetchTickets = async () => {
       try {
-        const response = await axiosInstance.get('/tickets/get-tickets');
+        const response = await axiosInstance.get('/tickets/get-all-tickets');
         setTickets(response.data); // Store the tickets in state
       } catch (error) {
         console.error('Failed to fetch tickets:', error);

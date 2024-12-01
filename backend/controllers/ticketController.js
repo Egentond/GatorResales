@@ -24,7 +24,7 @@ const listTicket = async (req, res) => {
     }
 }
 
-const getTickets = async (req, res) => {
+const getTicket = async (req, res) => {
     const { id } = req.params;
 
     try {
@@ -40,6 +40,16 @@ const getTickets = async (req, res) => {
         console.error(error);
     }
 }
+
+const getAllTickets = async (req, res) => {
+    try {
+        const tickets = await Ticket.find().select('-__v'); // Exclude version field
+        res.status(200).json({ status: "success", data: tickets });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+        console.error(error);
+    }
+};
 
 const filterTicketsBySport = async (req, res) => {
     const { sport } = req.body;
@@ -60,6 +70,7 @@ const filterTicketsBySport = async (req, res) => {
 
 module.exports = {
     listTicket,
-    getTickets,
+    getTicket,
+    getAllTickets,
     filterTicketsBySport
 }
