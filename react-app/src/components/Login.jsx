@@ -19,7 +19,7 @@ export default function Login({ setLoggedIn }) {
     setSuccess("");
     try {
       const response = await axiosInstance.post("/users/login", formData);
-      localStorage.setItem('loggedIn', 'true'); // Store login state in localStorage
+      sessionStorage.setItem('loggedIn', 'true'); // Store login state in localStorage
       setSuccess("Logged in successfully!");
       setLoggedIn(true);
       navigate('/'); 

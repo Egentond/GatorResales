@@ -16,11 +16,11 @@ import PrivateRoute from './components/PrivateRoute.jsx';
 import { AuthProvider } from './context/AuthProvider.jsx';
 
 function MainApp() {
-  const [loggedIn, setLoggedIn] = useState(localStorage.getItem('loggedIn') === 'true');
+  const [loggedIn, setLoggedIn] = useState(sessionStorage.getItem('loggedIn') === 'true');
 
   useEffect(() => {
     // Update localStorage when loggedIn changes
-    localStorage.setItem('loggedIn', loggedIn);
+    sessionStorage.setItem('loggedIn', loggedIn);
   }, [loggedIn]);
 
   return (
