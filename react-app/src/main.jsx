@@ -1,5 +1,6 @@
 import { StrictMode, useState } from 'react';
 import { createRoot } from 'react-dom/client';
+import { useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import './index.css';
@@ -15,7 +16,12 @@ import PrivateRoute from './components/PrivateRoute.jsx';
 import { AuthProvider } from './context/AuthProvider.jsx';
 
 function MainApp() {
-  const [loggedIn, setLoggedIn] = useState(false); 
+  const [loggedIn, setLoggedIn] = useState(localStorage.getItem('loggedIn') === 'true');
+
+  useEffect(() => {
+    // Update localStorage when loggedIn changes
+    localStorage.setItem('loggedIn', loggedIn);
+  }, [loggedIn]);
 
   return (
     <StrictMode>
@@ -23,13 +29,10 @@ function MainApp() {
           <Menu loggedIn={loggedIn} setLoggedIn={setLoggedIn} /> 
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/sell" element={<Sell />} />
-            <Route path="/buy" element={<Buy />} />
+            <Route path="/sell" element={<Sell loggedIn={loggedIn}/>} />
+            <Route path="/buy" element={<Buy loggedIn={loggedIn}/>} />
             <Route path="/register" element={<Register />} />
-            <Route
-              path="/login"
-              element={loggedIn ? <Navigate to="/" /> : <Login setLoggedIn={setLoggedIn} />}
-              />
+            <Route path="/login" element={loggedIn ? <Navigate to="/" /> : <Login setLoggedIn={setLoggedIn} />} />
             <Route path="*" element={<PageNotFound />} />
           </Routes>
         </Router>

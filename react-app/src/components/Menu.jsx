@@ -9,8 +9,9 @@ const Menu = ({ loggedIn, setLoggedIn }) => {
     try {
       const response = await axiosInstance.post('/users/logout')
       console.log("successfully logs out")
-      setLoggedIn(false); // Log out the user by setting it to false
-      navigate('/'); // Redirect to home page when the user gets logged out
+      localStorage.removeItem('loggedIn'); // Remove login state from localStorage
+      setLoggedIn(false);
+      navigate('/'); 
     } catch(error) {
       console.error(error);
     }
