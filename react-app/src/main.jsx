@@ -15,25 +15,6 @@ import Register from './components/Register.jsx';
 import PrivateRoute from './components/PrivateRoute.jsx';
 import { AuthProvider } from './context/AuthProvider.jsx';
 
-// Stripe Checkout Component
-import { loadStripe } from '@stripe/stripe-js';
-import { Elements } from '@stripe/react-stripe-js';
-
-const publishableKey = process.env.PUBLISHABLE_KEY;
-const stripePromise = loadStripe(publishableKey); // Replace with your Stripe publishable key
-
-function StripeCheckoutForm() {
-  return (
-    <Elements stripe={stripePromise}>
-      <form id="payment-form">
-        <div id="payment-element">{/* Stripe Elements will be injected here */}</div>
-        <button type="submit">Pay</button>
-        <div id="error-message"></div>
-      </form>
-    </Elements>
-  );
-}
-
 function MainApp() {
   const [loggedIn, setLoggedIn] = useState(sessionStorage.getItem('loggedIn') === 'true');
 
@@ -52,7 +33,6 @@ function MainApp() {
           <Route path="/buy" element={<Buy loggedIn={loggedIn} />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={loggedIn ? <Navigate to="/" /> : <Login setLoggedIn={setLoggedIn} />} />
-          <Route path="/checkout" element={<StripeCheckoutForm />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </Router>
