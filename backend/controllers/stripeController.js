@@ -1,3 +1,5 @@
+const User = require('../models/User');
+
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 const createConnectedAccount = async (req, res) => {
@@ -14,24 +16,29 @@ const createConnectedAccount = async (req, res) => {
 }
 
 const createPaymentIntent = async (req, res) => {
-    try {
-        const { amount, feeAmount, sellerAccountId } = req.body;
+    const { amount, sellerId } = req.body;
 
+    console.log(sellerId);
+    try {
+        const { stripeAccountId } = await User.findById(sellerId);
+        // Create the payment intent without transfer
         const paymentIntent = await stripe.paymentIntents.create({
-            amount, // Total price in cents
-            currency: 'usd',
-            payment_method_types: ['card'],
-            application_fee_amount: feeAmount, // Your platform fee in cents
+            amount: Math.round(amount * 100), // amount in cents
+            currency: currency || 'usd',
+            automatic_payment_methods: {
+                enabled: true,
+            },
             transfer_data: {
-                destination: sellerAccountId, // Seller's Connected Account ID
+                destination: stripeAccountId, 
             },
         });
 
-        res.status(200).send({ clientSecret: paymentIntent.client_secret });
+        res.status(200).json({ clientSecret: paymentIntent.client_secret });
     } catch (error) {
-        res.status(400).send({ error: error.message });
+        console.error('Error creating payment intent:', error);
+        res.status(500).json({ error: 'Failed to create payment intent' });
     }
-}
+};
 
 const handleWebhooks = async (req, res) => {
     const sig = req.headers['stripe-signature'];
