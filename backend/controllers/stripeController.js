@@ -16,14 +16,14 @@ const createConnectedAccount = async (req, res) => {
 }
 
 const createPaymentIntent = async (req, res) => {
-    const { amount, sellerId } = req.body;
+    const { price, sellerId } = req.body;
 
     console.log(sellerId);
     try {
         const { stripeAccountId } = await User.findById(sellerId);
         // Create the payment intent without transfer
         const paymentIntent = await stripe.paymentIntents.create({
-            amount: Math.round(amount * 100), // amount in cents
+            amount: Math.round(price * 100), // amount in cents
             currency: currency || 'usd',
             automatic_payment_methods: {
                 enabled: true,

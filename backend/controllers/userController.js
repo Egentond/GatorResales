@@ -10,7 +10,7 @@ const generateToken = (id) => {
 
 const registerUser = async (req, res) => {
     try {
-        const {firstName, lastName, email, password } = req.body;
+        const {firstName, lastName, email, password, stripeAccountId } = req.body;
 
         const userExists = await User.findOne({ email });
 
@@ -24,6 +24,7 @@ const registerUser = async (req, res) => {
             lastName,
             email,
             password,
+            stripeAccountId
         });
 
         if(user) {
@@ -39,6 +40,7 @@ const registerUser = async (req, res) => {
                 firstName: user.firstName,
                 lastname: user.lastName,
                 email: user.email,
+                stripeAccountId: user.stripeAccountId
             });
         } else {
             res.status(400).json({ message: 'Invalid user data' })
