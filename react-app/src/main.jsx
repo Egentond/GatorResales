@@ -19,7 +19,8 @@ import { AuthProvider } from './context/AuthProvider.jsx';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
 
-const stripePromise = loadStripe('your-publishable-key'); // Replace with your Stripe publishable key
+const publishableKey = process.env.PUBLISHABLE_KEY;
+const stripePromise = loadStripe(publishableKey); // Replace with your Stripe publishable key
 
 function StripeCheckoutForm() {
   return (
