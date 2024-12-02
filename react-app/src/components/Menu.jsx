@@ -41,7 +41,7 @@ const Menu = ({ loggedIn, setLoggedIn }) => {
               </li>
             </>
           ) : (
-            <li className="rounded-md transition delay-75 ease-in hover:bg-red-700 p-3">
+            <li className="rounded-md transition delay-75 ease-in hover:bg-gatorsOrange p-3">
               <button onClick={handleLogout}>Logout</button>
             </li>
           )}
