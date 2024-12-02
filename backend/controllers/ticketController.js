@@ -1,15 +1,15 @@
 const Ticket = require('../models/Ticket');
 
 const listTicket = async (req, res) => {
-    const { seller, title, sport, description, price } = req.body;
+    const { sellerId, title, sport, description, price } = req.body;
     
-    if (!seller || !title || !sport || !price) {
+    if (!sellerId || !title || !sport || !price) {
         return res.status(400).json({ status: "error", message: "Missing required fields" });
     }
 
     try {
         const ticket = new Ticket({
-            seller,
+            sellerId,
             title,
             sport,
             description,
