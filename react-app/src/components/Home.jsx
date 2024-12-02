@@ -5,18 +5,15 @@ import gatorsBasketball from '../assets/gators-basketball.jpg';
 import gatorsFootball from '../assets/gators-football.jpg';
 import gatorsVolleyball from '../assets/gators-volleyball.jpg';
 import gatorsWmsBasketball from '../assets/gators-womens-basketball.jpg';
+import { useNavigate } from 'react-router-dom';
 
 
 const Home = () => {
-
+  const navigate = useNavigate();
+  
   const filterTickets = (sport) => {
-    try {
-
-    } catch(error) {
-      console.error(error);
-    }
+    navigate(`/buy?sport=${encodeURIComponent(sport)}`);
   }
-
 
   return (
     <>
@@ -31,24 +28,24 @@ const Home = () => {
             
             <div className='align-middle text-center relative flex gap-8 mt-40 content-center justify-center'>
             
-              <div onClick={filterTickets('football')} className="bg-white bg-opacity-80 p-4 rounded shadow-md w-80 transition ease-in-out delay-150 text-gatorsBlue hover:bg-gatorsBlue hover:scale-110 hover:text-white">
+              <div onClick={() => filterTickets("football")} className="bg-white bg-opacity-80 p-4 rounded shadow-md w-80 transition ease-in-out delay-150 text-gatorsBlue hover:bg-gatorsBlue hover:scale-110 hover:text-white">
                 <p className='text-xl'>Football</p>
                 <img src={gatorsFootball} alt="Gators Football"/>
               </div>
               
-              <div onClick={filterTickets('mensBasketball')} className="bg-white bg-opacity-80 p-4 rounded shadow-md w-80 transition ease-in-out delay-75 text-gatorsBlue hover:bg-gatorsBlue hover:scale-110 hover:text-white">
+              <div onClick={() => filterTickets("mens basketball")} className="bg-white bg-opacity-80 p-4 rounded shadow-md w-80 transition ease-in-out delay-75 text-gatorsBlue hover:bg-gatorsBlue hover:scale-110 hover:text-white">
                 <p className='text-xl'>Mens Basketball</p>
                 <img src={gatorsBasketball} alt="gators-mens-basketball-image" />
                                 
               </div>
               
-              <div onClick={filterTickets('volleyball')} className='bg-white bg-opacity-80 p-4 rounded shadow-md w-80 transition ease-in-out delay-75 text-gatorsBlue hover:bg-gatorsBlue hover:scale-110 hover:text-white'>
+              <div onClick={() => filterTickets("volleyball")} className='bg-white bg-opacity-80 p-4 rounded shadow-md w-80 transition ease-in-out delay-75 text-gatorsBlue hover:bg-gatorsBlue hover:scale-110 hover:text-white'>
                 <p className='text-xl'>Volleyball</p>
                 <img src={gatorsVolleyball} alt="gators-volleyball-image" />
                 
               </div>
               
-              <div onClick={filterTickets('womensBasketball')} className='bg-white bg-opacity-80 p-4 rounded shadow-md w-80 transition ease-in-out delay-75 text-gatorsBlue hover:bg-gatorsBlue hover:scale-110 hover:text-white'>
+              <div onClick={() => filterTickets("womens basketball")} className='bg-white bg-opacity-80 p-4 rounded shadow-md w-80 transition ease-in-out delay-75 text-gatorsBlue hover:bg-gatorsBlue hover:scale-110 hover:text-white'>
                 <p className='text-xl'>Womens Basketball</p>
                 <img src={gatorsWmsBasketball} alt="gators-womens-basketball-image" />
               </div>
