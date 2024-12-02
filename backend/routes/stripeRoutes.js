@@ -1,6 +1,5 @@
 const express = require('express');
 const { createConnectedAccount, createPaymentIntent, handleWebhooks } = require('../controllers/stripeController');
-
 const router = express.Router();
 
 // Route to create a connected account for sellers

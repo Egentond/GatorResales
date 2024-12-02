@@ -52,22 +52,26 @@ const getAllTickets = async (req, res) => {
 };
 
 const filterTicketsBySport = async (req, res) => {
-    const { sport } = req.body;
+    const { sport } = req.query; // Use query parameters for GET requests
+
+    if (!sport) {
+        return res.status(400).json({ status: "error", message: "Missing sport parameter" });
+    }
 
     try {
 
         const tickets = await Ticket.find({ sport }).select('-__v');
 
-        if(tickets.length === 0) {
+        if (tickets.length === 0) {
             return res.status(404).json({ status: "error", message: "No tickets found for this sport" });
         }
 
         res.status(200).json({ status: "success", data: tickets });
-    } catch(error) {
+    } catch (error) {
         res.status(500).json({ error: error.message });
         console.error(error);
     }
-}
+};
 
 module.exports = {
     listTicket,
