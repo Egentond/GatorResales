@@ -32,8 +32,6 @@ const Buy = ({ loggedIn }) => {
     navigate(`/checkout`, {
       state: {
         ticketId: ticket._id,
-        price: ticket.price,
-        title: ticket.title,
       },
     });
   };
