@@ -3,7 +3,7 @@ const User = require('./User');
 const bcrypt = require('bcryptjs');
 
 const ticketSchema = new mongoose.Schema({
-    seller: {type: String, required: true},
+    sellerId: {type: String, required: true},
     sellerEmail: {type: String},
     buyer: {type: String},
     title: {type: String, required: true},
