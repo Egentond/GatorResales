@@ -2,7 +2,8 @@ import React, { useEffect } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 
-const stripePromise = loadStripe("your-publishable-key"); // Replace with your publishable key
+const publishableKey = process.env.PUBLISHABLE_KEY;
+const stripePromise = loadStripe(publishableKey); // Replace with your publishable key
 
 const CheckoutForm = () => {
     const handlePayment = async (event) => {
