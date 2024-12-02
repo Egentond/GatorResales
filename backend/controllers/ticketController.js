@@ -55,6 +55,7 @@ const filterTicketsBySport = async (req, res) => {
     const { sport } = req.body;
 
     try {
+
         const tickets = await Ticket.find({ sport }).select('-__v');
 
         if(tickets.length === 0) {
