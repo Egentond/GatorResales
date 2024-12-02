@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom'; // Import useLocation
+import { useLocation, useNavigate } from 'react-router-dom'; 
 import axiosInstance from "../api/axiosInstance";
 import Footer from './Footer';
 
 const Buy = ({ loggedIn }) => {
   const [tickets, setTickets] = useState([]);
   const location = useLocation(); // Access location object
+  const navigate = useNavigate();
   const queryParams = new URLSearchParams(location.search);
   const sportFilter = queryParams.get('sport'); // Get the sport query parameter
 
@@ -26,6 +27,17 @@ const Buy = ({ loggedIn }) => {
     }
   }, [loggedIn, sportFilter]); // Add sportFilter as a dependency
 
+  const handleBuyClick = (ticket) => {
+    // Go to the checkout page with ticket details as parameters
+    navigate(`/checkout`, {
+      state: {
+        ticketId: ticket._id,
+        price: ticket.price,
+        title: ticket.title,
+      },
+    });
+  };
+
   return (
     <>
       {loggedIn ? (
@@ -39,7 +51,12 @@ const Buy = ({ loggedIn }) => {
                     <h2 className='text-xl'>{ticket.title} - ${ticket.price}</h2>
                     <p>{ticket.description}</p>
                     <small className='text-pretty'>Sport: {ticket.sport}</small>
-                    <button className='flex border-none bg-gatorsBlue text-white hover:bg-gatorsOrange transition ease-in-out p-1 rounded-md'>Buy</button>
+                    <button
+                      onClick={() => handleBuyClick(ticket)} 
+                      className="flex border-none bg-gatorsBlue text-white hover:bg-gatorsOrange transition ease-in-out p-1 rounded-md"
+                    >
+                      Buy
+                    </button>
                   </li>
                 </div>
               ))}
