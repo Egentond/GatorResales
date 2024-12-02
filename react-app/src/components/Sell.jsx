@@ -5,7 +5,7 @@ import Footer from "./Footer";
 const Sell = ({ loggedIn }) => {
   const [userData, setUserData] = useState(null);
   const [ticketData, setTicketData] = useState({
-    seller: '',
+    sellerId: '',
     buyer: '',
     title: '',
     sport: '',
@@ -37,7 +37,7 @@ const Sell = ({ loggedIn }) => {
       if (userData) {
           setTicketData(prevData => ({
               ...prevData,
-              seller: userData.id || '',
+              sellerId: userData.id || '',
           }));
       }
   }, [userData]);
@@ -61,7 +61,7 @@ const Sell = ({ loggedIn }) => {
       });
       setSuccessMsg('Ticket listing posted successfully.');
       setTicketData({
-        seller: userData.id || '',
+        sellerId: userData.id || '',
         buyer: '',
         title: '',
         sport: '',
