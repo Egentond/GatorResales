@@ -24,7 +24,7 @@ const createPaymentIntent = async (req, res) => {
         // Create the payment intent without transfer
         const paymentIntent = await stripe.paymentIntents.create({
             amount: Math.round(price * 100), // amount in cents
-            currency: currency || 'usd',
+            currency: 'usd',
             automatic_payment_methods: {
                 enabled: true,
             },

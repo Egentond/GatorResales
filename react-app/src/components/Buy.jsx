@@ -29,6 +29,7 @@ const Buy = ({ loggedIn }) => {
 
   const handleBuyClick = (ticket) => {
     // Go to the checkout page with ticket details as parameters
+    
     navigate(`/checkout`, {
       state: {
         ticketId: ticket._id,
@@ -45,7 +46,7 @@ const Buy = ({ loggedIn }) => {
             <ul className='columns-2 justify-center'>
               {tickets.map(ticket => (
                 <div className='p-2 gap-8' key={ticket._id}> {/* Ensure key is here */}
-                  <li className='block bg-gray-100 p-5 rounded-md hover:bg-gray-200'>
+                  <li className='bg-gray-100 p-5 rounded-md hover:bg-gray-200'>
                     <h2 className='text-xl'>{ticket.title} - ${ticket.price}</h2>
                     <p>{ticket.description}</p>
                     <small className='text-pretty'>Sport: {ticket.sport}</small>

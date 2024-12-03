@@ -3,6 +3,7 @@ import { loadStripe } from '@stripe/stripe-js';
 import { Elements, useStripe, useElements, PaymentElement } from '@stripe/react-stripe-js';
 import { useLocation, useNavigate } from 'react-router-dom'; 
 import axiosInstance from '../api/axiosInstance';
+import Menu from './Menu';
 
 const stripePromise = loadStripe('pk_test_51QROxHHTccflFChqWBmvWXakB242MQTY75AF2OVal1kHPrIjezauC3owcfxguzaI62kXAihQS4FukOcMBGu2UWdT00HtOaskbL');
 
@@ -25,7 +26,7 @@ const PaymentForm = ({ amount, sellerId, ticketId}) => {
         const { error, paymentIntent } = await stripe.confirmPayment({
             elements,
             confirmParams: {
-                return_url: `${window.location.origin}/payment-success?sellerId=${sellerId}&amount=${amount}&ticketId=${ticketId}`,
+                return_url: `${window.location.origin}/payment-success?redirect_status=successful&sellerId=${sellerId}&amount=${amount}&ticketId=${ticketId}`,
             },
         });
         if (error) {
@@ -33,13 +34,11 @@ const PaymentForm = ({ amount, sellerId, ticketId}) => {
         }
         else if (paymentIntent.status === 'succeeded') {
             console.log('Payment succeeded!');
-        }
-        
+        }  
     };
 
     return (
         <>
-            <Header />
             <div className="flex bg-gray-100 min-h-screen">
                 <div className=" mx-auto py-8">
                     <form onSubmit={handleSubmit} className="bg-white p-6 shadow-md rounded-md">
@@ -80,17 +79,16 @@ const PaymentPage = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const fetchOfferDetails = async () => {
+        const fetchTicketDetails = async () => {
             try {
-                const response = await axiosInstance.get(`/tickets/get-ticket/${ticketId}`, {
-                    withCredentials: true,
-                });
-
-                setTicketDetails(response.data);
+                console.log(ticketId);
+                const response = await axiosInstance.get(`/tickets/get-ticket/${ticketId}`);
+                console.log(response);
+                setTicketDetails(response.data.data);
                 
                 // After offer details are fetched, create the payment intent
                 if (response.data) {
-                    const { price, sellerId } = response.data;
+                    const { price, sellerId } = response.data.data;
                     const paymentIntentResponse = await axiosInstance.post('/stripe/create-payment-intent', {
                         price,
                         sellerId,
@@ -106,7 +104,7 @@ const PaymentPage = () => {
         };
 
         if (ticketId) {
-            fetchOfferDetails();
+            fetchTicketDetails();
         } else {
             console.error("offerId is undefined");
             setLoading(false);
@@ -134,7 +132,7 @@ const PaymentPage = () => {
                     <PaymentForm 
                         amount={details.amount} 
                         sellerId={details.sellerId} 
-                        ticketId={details.ticketId}
+                        ticketId={details._id}
                     />
                 </Elements>
             )}

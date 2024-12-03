@@ -43,7 +43,7 @@ const getTicket = async (req, res) => {
 
 const getAllTickets = async (req, res) => {
     try {
-        const tickets = await Ticket.find().select('-__v'); // Exclude version field
+        const tickets = await Ticket.find({ status: { $ne: "sold" } }).select('-__v');
         res.status(200).json({ status: "success", data: tickets });
     } catch (error) {
         res.status(500).json({ error: error.message });
@@ -52,15 +52,14 @@ const getAllTickets = async (req, res) => {
 };
 
 const filterTicketsBySport = async (req, res) => {
-    const { sport } = req.query; // Use query parameters for GET requests
+    const { sport } = req.query;
 
     if (!sport) {
         return res.status(400).json({ status: "error", message: "Missing sport parameter" });
     }
 
     try {
-
-        const tickets = await Ticket.find({ sport }).select('-__v');
+        const tickets = await Ticket.find({ sport, status: { $ne: "sold" } }).select('-__v');
 
         if (tickets.length === 0) {
             return res.status(404).json({ status: "error", message: "No tickets found for this sport" });
@@ -73,9 +72,32 @@ const filterTicketsBySport = async (req, res) => {
     }
 };
 
+
+const updateTicketStatus = async (req, res) => {
+    const { ticketId } = req.body;
+
+    try {
+        const ticket = await Ticket.findById(ticketId);
+        console.log(ticket);
+        if(!ticket) {
+            return res.status(404).json({ error: 'Ticket not found' });
+        }
+        ticket.status = "sold";
+        await ticket.save();
+
+        res.status(200).json({ status: "success" });
+    } catch(error) {
+        res.status(500).json({ error: error.message });
+        console.error(error);
+    }
+}
+    
+
+
 module.exports = {
     listTicket,
     getTicket,
     getAllTickets,
-    filterTicketsBySport
+    filterTicketsBySport,
+    updateTicketStatus
 }
