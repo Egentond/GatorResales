@@ -15,6 +15,7 @@ import Register from './components/Register.jsx';
 import PrivateRoute from './components/PrivateRoute.jsx';
 import { AuthProvider } from './context/AuthProvider.jsx';
 import PaymentPage from './components/PaymentPage.jsx';
+import PaymentSuccess from './components/PaymentSuccess.jsx';
 
 function MainApp() {
   const [loggedIn, setLoggedIn] = useState(sessionStorage.getItem('loggedIn') === 'true');
@@ -35,6 +36,7 @@ function MainApp() {
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={loggedIn ? <Navigate to="/" /> : <Login setLoggedIn={setLoggedIn} />} />
           <Route path="/checkout" element={<PaymentPage />} />
+          <Route path="/payment-success" element={<PaymentSuccess />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </Router>
