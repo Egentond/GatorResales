@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom'; 
 import axiosInstance from "../api/axiosInstance";
 import Footer from './Footer';
+import gatorCountry from '../assets/gatorCountry.jpg';
 
 const Buy = ({ loggedIn }) => {
   const [tickets, setTickets] = useState([]);
@@ -39,7 +40,22 @@ const Buy = ({ loggedIn }) => {
 
   return (
     <>
-      {loggedIn ? (
+      {!loggedIn ? (
+        // put the gator image in when user not logged in 
+        <div
+          className="relative min-h-screen bg-cover bg-center flex items-center justify-center"
+          style={{ backgroundImage: `url(${gatorCountry})` }}
+        >
+          <div className="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
+          <div className="relative z-10 max-w-md w-full space-y-8 p-6 bg-white rounded-lg shadow-md">
+            <div className="text-center">
+              <h1 className="text-3xl font-bold text-gray-800">Buy Tickets</h1>
+              <p className="mt-4 text-gray-600">You must be logged in to buy tickets.</p>
+            </div>
+          </div>
+        </div>
+      ) : (
+        // dont use image when the user logged in it looks bad
         <div>
           <h1 className="pt-5 text-4xl flex justify-center">Tickets for Sale</h1>
           <div className='flex pt-5 pb-5 items items-center justify-center mt-5'>
@@ -59,15 +75,6 @@ const Buy = ({ loggedIn }) => {
                   </div>
                 </div>
               ))}
-            </div>
-          </div>
-        </div>
-      ) : (
-        <div className="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-          <div className="max-w-md w-full space-y-8 p-6 bg-white rounded-lg shadow-md">
-            <div className="text-center">
-              <h1 className="text-3xl font-bold text-gray-800">Buy Tickets</h1>
-              <p>You must be logged in to buy tickets.</p>
             </div>
           </div>
         </div>
