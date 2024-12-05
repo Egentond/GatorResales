@@ -43,23 +43,23 @@ const Buy = ({ loggedIn }) => {
         <div>
           <h1 className="pt-5 text-4xl flex justify-center">Tickets for Sale</h1>
           <div className='flex pt-5 pb-5 items items-center justify-center mt-5'>
-            <ul className='columns-2 justify-center'>
-              {tickets.map(ticket => (
-                <div className='p-2 gap-8' key={ticket._id}> {/* Ensure key is here */}
-                  <li className='bg-gray-100 p-5 rounded-md hover:bg-gray-200'>
-                    <h2 className='text-xl'>{ticket.title} - ${ticket.price}</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {tickets.map((ticket) => (
+                <div className="p-2" key={ticket._id}>
+                  <div className="bg-gray-100 p-5 rounded-md hover:bg-gray-200">
+                    <h2 className="text-xl">{ticket.title} - ${ticket.price}</h2>
                     <p>{ticket.description}</p>
-                    <small className='text-pretty'>Sport: {ticket.sport}</small>
+                    <small className="text-pretty">Sport: {ticket.sport}</small>
                     <button
-                      onClick={() => handleBuyClick(ticket)} 
+                      onClick={() => handleBuyClick(ticket)}
                       className="flex border-none bg-gatorsBlue text-white hover:bg-gatorsOrange transition ease-in-out p-1 rounded-md"
                     >
                       Buy
                     </button>
-                  </li>
+                  </div>
                 </div>
               ))}
-            </ul>
+            </div>
           </div>
         </div>
       ) : (
