@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axiosInstance from "../api/axiosInstance";
 import Footer from "./Footer";
+import gatorCountry from "../assets/gatorCountry.jpg";
 
 const Sell = ({ loggedIn }) => {
   const [userData, setUserData] = useState(null);
@@ -78,8 +79,22 @@ const Sell = ({ loggedIn }) => {
 
   return (
     <>
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-md w-full space-y-8 p-6 bg-white rounded-lg shadow-md">
+      {!loggedIn ? (
+        <div
+          className="relative min-h-screen bg-cover bg-center flex items-center justify-center"
+          style={{ backgroundImage: `url(${gatorCountry})` }}
+        >
+          <div className="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
+          <div className="relative z-10 max-w-md w-full space-y-8 p-6 bg-white rounded-lg shadow-md">
+            <div className="text-center">
+              <h1 className="text-3xl font-bold text-gray-800">Sell Tickets</h1>
+              <p className="mt-4 text-gray-600">You must be logged in to list tickets for sale.</p>
+            </div>
+          </div>
+        </div>
+      ) : (
+        <div className="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-md w-full space-y-8 p-6 bg-white rounded-lg shadow-md">
           
           {loggedIn ? (
             <>
@@ -152,7 +167,7 @@ const Sell = ({ loggedIn }) => {
           )}
         </div>
       </div>
-      
+      )}
       <Footer />
     </>
   );
