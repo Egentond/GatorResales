@@ -51,6 +51,12 @@ const Buy = ({ loggedIn }) => {
             <div className="text-center">
               <h1 className="text-3xl font-bold text-gray-800">Buy Tickets</h1>
               <p className="mt-4 text-gray-600">You must be logged in to buy tickets.</p>
+              <button
+                onClick={() => navigate('/login')}
+                className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"
+              >
+                Login
+              </button>
             </div>
           </div>
         </div>
