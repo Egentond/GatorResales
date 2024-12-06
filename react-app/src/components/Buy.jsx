@@ -6,6 +6,8 @@ import gatorCountry from '../assets/gatorCountry.jpg';
 
 const Buy = ({ loggedIn }) => {
   const [tickets, setTickets] = useState([]);
+  const [sortOrder, setSortOrder] = useState(null);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
   const location = useLocation(); // Access location object
   const navigate = useNavigate();
   const queryParams = new URLSearchParams(location.search);
@@ -30,12 +32,24 @@ const Buy = ({ loggedIn }) => {
 
   const handleBuyClick = (ticket) => {
     // Go to the checkout page with ticket details as parameters
-    
     navigate(`/checkout`, {
       state: {
         ticketId: ticket._id,
       },
     });
+  };
+
+  const handleSort = (order) => {
+    setSortOrder(order);
+    setDropdownOpen(false);
+    const sortedTickets = [...tickets].sort((a, b) => {
+      if (order === 'high-low') {
+        return b.price - a.price;
+      } else {
+        return a.price - b.price;
+      }
+    });
+    setTickets(sortedTickets);
   };
 
   return (
@@ -64,6 +78,34 @@ const Buy = ({ loggedIn }) => {
         // dont use image when the user logged in it looks bad
         <div>
           <h1 className="pt-5 text-4xl flex justify-center">Tickets for Sale</h1>
+          <div className="flex justify-center mt-5">
+            <div className="relative inline-block text-left">
+              <button
+                onClick={() => setDropdownOpen(!dropdownOpen)}
+                className="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-gatorsBlue text-white text-sm font-medium hover:bg-blue-700 focus:outline-none"
+              >
+                Price
+              </button>
+              {dropdownOpen && (
+                <div className="origin-top-center absolute left-1/2 transform -translate-x-1/2 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+                  <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+                    <button
+                      onClick={() => handleSort('high-low')}
+                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
+                    >
+                      High - Low
+                    </button>
+                    <button
+                      onClick={() => handleSort('low-high')}
+                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
+                    >
+                      Low - High
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
           <div className='flex pt-5 pb-5 items items-center justify-center mt-5'>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {tickets.map((ticket) => (
