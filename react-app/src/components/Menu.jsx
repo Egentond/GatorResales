@@ -1,5 +1,5 @@
-import { Link, useNavigate, useLocation } from 'react-router-dom';
-import axiosInstance from '../api/axiosInstance';
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import axiosInstance from "../api/axiosInstance";
 
 const Menu = ({ loggedIn, setLoggedIn }) => {
   const navigate = useNavigate();
@@ -7,28 +7,25 @@ const Menu = ({ loggedIn, setLoggedIn }) => {
 
   const handleLogout = async () => {
     try {
-      const response = await axiosInstance.post('/users/logout');
+      const response = await axiosInstance.post("/users/logout");
       console.log("successfully logged out");
-      localStorage.removeItem('loggedIn'); // Remove login state from localStorage
+      localStorage.removeItem("loggedIn"); // Remove login state from localStorage
       setLoggedIn(false);
-      navigate('/');
+      navigate("/");
     } catch (error) {
       console.error("Logout failed:", error);
     }
   };
 
   const handleLogoClick = () => {
-    if (location.pathname !== '/') {
-      navigate('/');
+    if (location.pathname !== "/") {
+      navigate("/");
     }
   };
 
   return (
     <div className="bg-gatorsBlue text-white flex justify-between items-center py-5">
-      <h1
-        className="text-3xl ml-4 cursor-pointer"
-        onClick={handleLogoClick}
-      >
+      <h1 className="text-3xl ml-4 cursor-pointer" onClick={handleLogoClick}>
         Gator Resales
       </h1>
       <nav>

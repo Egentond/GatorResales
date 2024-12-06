@@ -1,6 +1,6 @@
-import React from 'react';
-import { Navigate, useLocation } from 'react-router-dom';
-import useAuth from '../context/useAuth'; // Correct import for useAuth
+import React from "react";
+import { Navigate, useLocation } from "react-router-dom";
+import useAuth from "../context/useAuth"; // Correct import for useAuth
 
 const PrivateRoute = ({ children }) => {
   const { auth } = useAuth(); // Access auth from the context

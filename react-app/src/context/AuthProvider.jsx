@@ -1,15 +1,15 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useEffect } from "react";
 
-const AuthContext = createContext(); 
+const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [auth, setAuth] = useState(() => {
-    const savedAuth = localStorage.getItem('auth');
+    const savedAuth = localStorage.getItem("auth");
     return savedAuth ? JSON.parse(savedAuth) : null;
   });
 
   useEffect(() => {
-    localStorage.setItem('auth', JSON.stringify(auth));
+    localStorage.setItem("auth", JSON.stringify(auth));
   }, [auth]);
 
   return (
@@ -19,4 +19,4 @@ export const AuthProvider = ({ children }) => {
   );
 };
 
-export default AuthContext; 
+export default AuthContext;

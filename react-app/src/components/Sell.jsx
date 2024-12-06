@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axiosInstance from "../api/axiosInstance";
 import Footer from "./Footer";
 import gatorCountry from "../assets/gatorCountry.jpg";
@@ -7,49 +7,49 @@ import gatorCountry from "../assets/gatorCountry.jpg";
 const Sell = ({ loggedIn }) => {
   const [userData, setUserData] = useState(null);
   const [ticketData, setTicketData] = useState({
-    sellerId: '',
-    buyer: '',
-    title: '',
-    sport: '',
-    description: '',
-    price: '',
-    status: '',
+    sellerId: "",
+    buyer: "",
+    title: "",
+    sport: "",
+    description: "",
+    price: "",
+    status: "",
   });
-  const [successMsg, setSuccessMsg] = useState('');
-  const [errMsg, setErrMsg] = useState('');
+  const [successMsg, setSuccessMsg] = useState("");
+  const [errMsg, setErrMsg] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
-      const fetchData = async () => {
-          try {
-              const response = await axiosInstance.get('/users/user-data', {
-                  withCredentials: true,
-              });
-              setUserData(response.data);
-          } catch(error) {
-              console.error('Failed to fetch user data', error);
-          }
-      };
-
-      if (loggedIn) {
-          fetchData();
+    const fetchData = async () => {
+      try {
+        const response = await axiosInstance.get("/users/user-data", {
+          withCredentials: true,
+        });
+        setUserData(response.data);
+      } catch (error) {
+        console.error("Failed to fetch user data", error);
       }
+    };
+
+    if (loggedIn) {
+      fetchData();
+    }
   }, [loggedIn]);
 
   useEffect(() => {
-      if (userData) {
-          setTicketData(prevData => ({
-              ...prevData,
-              sellerId: userData.id || '',
-          }));
-      }
+    if (userData) {
+      setTicketData((prevData) => ({
+        ...prevData,
+        sellerId: userData.id || "",
+      }));
+    }
   }, [userData]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setTicketData(prevData => ({ ...prevData, [name]: value }));
-    setSuccessMsg('');
-    setErrMsg('');
+    setTicketData((prevData) => ({ ...prevData, [name]: value }));
+    setSuccessMsg("");
+    setErrMsg("");
   };
 
   const handleSubmit = async (e) => {
@@ -59,25 +59,28 @@ const Sell = ({ loggedIn }) => {
       return;
     }
     try {
-      const response = await axiosInstance.post('/tickets/list-ticket', ticketData, {
-        headers: { 'Content-Type': 'application/json' },
-      });
-      setSuccessMsg('Ticket listing posted successfully.');
+      const response = await axiosInstance.post(
+        "/tickets/list-ticket",
+        ticketData,
+        {
+          headers: { "Content-Type": "application/json" },
+        },
+      );
+      setSuccessMsg("Ticket listing posted successfully.");
       setTicketData({
-        sellerId: userData.id || '',
-        buyer: '',
-        title: '',
-        sport: '',
-        description: '',
-        price: '',
-        status: '',
+        sellerId: userData.id || "",
+        buyer: "",
+        title: "",
+        sport: "",
+        description: "",
+        price: "",
+        status: "",
       });
     } catch (error) {
-      console.error('Error posting listing:', error);
-      setErrMsg('Failed to post listing.');
+      console.error("Error posting listing:", error);
+      setErrMsg("Failed to post listing.");
     }
   };
-  
 
   return (
     <>
@@ -89,20 +92,21 @@ const Sell = ({ loggedIn }) => {
         <div className="relative z-10 max-w-md w-full space-y-8 p-6 bg-white rounded-lg shadow-md">
           {loggedIn ? (
             <>
-              <h1 className="text-center text-3xl font-bold text-gray-800">List a Ticket for Sale</h1>
+              <h1 className="text-center text-3xl font-bold text-gray-800">
+                List a Ticket for Sale
+              </h1>
 
               {successMsg && (
                 <p className="text-green-500 text-center">{successMsg}</p>
               )}
-              {errMsg && (
-                <p className="text-red-500 text-center">{errMsg}</p>
-              )}
+              {errMsg && <p className="text-red-500 text-center">{errMsg}</p>}
 
               <form onSubmit={handleSubmit} className="space-y-6">
-                
                 <div>
-                  <label className="block text-sm font-medium text-gray-700">Set a <b>TITLE</b> for the ticket you are selling: </label>
-                  <input 
+                  <label className="block text-sm font-medium text-gray-700">
+                    Set a <b>TITLE</b> for the ticket you are selling:{" "}
+                  </label>
+                  <input
                     className="mt-1 p-2 border border-gray-300 rounded-md w-full focus:ring-gatorsBlue focus:border-gatorsBlue"
                     type="text"
                     name="title"
@@ -112,8 +116,10 @@ const Sell = ({ loggedIn }) => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700">What <b>SPORTS GAME</b> is this ticket for </label>
-                  <input 
+                  <label className="block text-sm font-medium text-gray-700">
+                    What <b>SPORTS GAME</b> is this ticket for{" "}
+                  </label>
+                  <input
                     className="mt-1 p-2 border border-gray-300 rounded-md w-full focus:ring-gatorsBlue focus:border-gatorsBlue"
                     type="text"
                     name="sport"
@@ -123,8 +129,10 @@ const Sell = ({ loggedIn }) => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700">Write a <b>DESCRIPTION</b> of the ticket you are selling: </label>
-                  <input 
+                  <label className="block text-sm font-medium text-gray-700">
+                    Write a <b>DESCRIPTION</b> of the ticket you are selling:{" "}
+                  </label>
+                  <input
                     className="mt-1 p-2 border border-gray-300 rounded-md w-full focus:ring-gatorsBlue focus:border-gatorsBlue"
                     type="text"
                     name="description"
@@ -134,12 +142,14 @@ const Sell = ({ loggedIn }) => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700"><b>PRICE</b> ($): </label>
-                  <input 
+                  <label className="block text-sm font-medium text-gray-700">
+                    <b>PRICE</b> ($):{" "}
+                  </label>
+                  <input
                     className="mt-1 p-2 border border-gray-300 rounded-md w-full focus:ring-gatorsBlue focus:border-gatorsBlue"
                     type="number"
                     name="price"
-                    min={0.00}
+                    min={0.0}
                     value={ticketData.price}
                     onChange={handleInputChange}
                   />
@@ -153,9 +163,11 @@ const Sell = ({ loggedIn }) => {
           ) : (
             <div className="text-center">
               <h1 className="text-3xl font-bold text-gray-800">Sell Tickets</h1>
-              <p className="mt-4 text-gray-600">You must be logged in to list tickets for sale.</p>
+              <p className="mt-4 text-gray-600">
+                You must be logged in to list tickets for sale.
+              </p>
               <button
-                onClick={() => navigate('/login')}
+                onClick={() => navigate("/login")}
                 className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"
               >
                 Login
