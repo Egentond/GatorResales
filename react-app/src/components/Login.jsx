@@ -14,18 +14,18 @@ export default function Login({ setLoggedIn }) {
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e) => {  // Handle form submission
     e.preventDefault();
     setError("");
     setSuccess("");
     try {
-      const response = await axiosInstance.post("/users/login", formData);
+      const response = await axiosInstance.post("/users/login", formData);  // Send login request
       sessionStorage.setItem("loggedIn", "true"); // Store login state in localStorage
       setSuccess("Logged in successfully!");
       setLoggedIn(true);
       navigate("/");
     } catch (error) {
-      setError(error.response?.data?.message || "An error occurred.");
+      setError(error.response?.data?.message || "An error occurred.");  // Set error message
       console.error(error);
     }
   };
@@ -33,7 +33,7 @@ export default function Login({ setLoggedIn }) {
   return (
     <div
       className="relative min-h-screen bg-cover bg-center"
-      style={{ backgroundImage: `url(${gatorCountry})` }}
+      style={{ backgroundImage: `url(${gatorCountry})` }} // Set the background image
     >
       <div className="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
       <div className="relative z-10 flex items-center justify-center min-h-screen py-12 px-4 sm:px-6 lg:px-8">
@@ -52,7 +52,7 @@ export default function Login({ setLoggedIn }) {
                 type="email"
                 name="email"
                 value={formData.email}
-                onChange={handleInputChange}
+                onChange={handleInputChange}  // Handle input change
                 className="mt-1 p-2 border border-gray-300 rounded-md w-full focus:ring-gatorsBlue focus:border-gatorsBlue"
                 required
               />

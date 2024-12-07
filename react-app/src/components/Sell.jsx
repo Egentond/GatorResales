@@ -4,9 +4,9 @@ import axiosInstance from "../api/axiosInstance";
 import Footer from "./Footer";
 import gatorCountry from "../assets/gatorCountry.jpg";
 
-const Sell = ({ loggedIn }) => {
+const Sell = ({ loggedIn }) => {  // Sell component
   const [userData, setUserData] = useState(null);
-  const [ticketData, setTicketData] = useState({
+  const [ticketData, setTicketData] = useState({  // Ticket data
     sellerId: "",
     buyer: "",
     title: "",
@@ -19,11 +19,11 @@ const Sell = ({ loggedIn }) => {
   const [errMsg, setErrMsg] = useState("");
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchData = async () => {
+  useEffect(() => {   // Fetch user data
+    const fetchData = async () => {  // Fetch user data
       try {
-        const response = await axiosInstance.get("/users/user-data", {
-          withCredentials: true,
+        const response = await axiosInstance.get("/users/user-data", { // Send a request to get user data
+          withCredentials: true,  // Include credentials in the request
         });
         setUserData(response.data);
       } catch (error) {
@@ -36,39 +36,39 @@ const Sell = ({ loggedIn }) => {
     }
   }, [loggedIn]);
 
-  useEffect(() => {
+  useEffect(() => {   // Set the sellerId in ticketData
     if (userData) {
-      setTicketData((prevData) => ({
+      setTicketData((prevData) => ({  // Set the sellerId in ticketData
         ...prevData,
         sellerId: userData.id || "",
       }));
     }
   }, [userData]);
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e) => {  // Handle input change
     const { name, value } = e.target;
-    setTicketData((prevData) => ({ ...prevData, [name]: value }));
+    setTicketData((prevData) => ({ ...prevData, [name]: value }));  // Update ticket data
     setSuccessMsg("");
     setErrMsg("");
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e) => {  // Handle form submission
     e.preventDefault();
     if (!loggedIn) {
       setErrMsg("You must be logged in to post a ticket.");
       return;
     }
     try {
-      const response = await axiosInstance.post(
-        "/tickets/list-ticket",
-        ticketData,
+      const response = await axiosInstance.post(   // Send a request to post a ticket listing
+        "/tickets/list-ticket",  // Post ticket listing
+        ticketData, // Ticket data
         {
-          headers: { "Content-Type": "application/json" },
+          headers: { "Content-Type": "application/json" }, // Set the content type
         },
       );
       setSuccessMsg("Ticket listing posted successfully.");
       setTicketData({
-        sellerId: userData.id || "",
+        sellerId: userData.id || "",      // Reset ticket data
         buyer: "",
         title: "",
         sport: "",

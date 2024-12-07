@@ -10,30 +10,30 @@ import { useLocation, useNavigate } from "react-router-dom";
 import axiosInstance from "../api/axiosInstance";
 import Menu from "./Menu";
 
-const stripePromise = loadStripe(
+const stripePromise = loadStripe(  // Load Stripe
   "pk_test_51QROxHHTccflFChqWBmvWXakB242MQTY75AF2OVal1kHPrIjezauC3owcfxguzaI62kXAihQS4FukOcMBGu2UWdT00HtOaskbL",
 );
 
-const PaymentForm = ({ amount, sellerId, ticketId }) => {
+const PaymentForm = ({ amount, sellerId, ticketId }) => {  // Payment form component
   const stripe = useStripe();
   const elements = useElements();
   const navigate = useNavigate(); // Initialize navigate hook
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event) => {   // Handle form submission
     event.preventDefault();
 
     if (!stripe || !elements) {
       return;
     }
-    const { error: submitError } = await elements.submit();
+    const { error: submitError } = await elements.submit();  // Submit the payment form
     if (submitError) {
       console.error("Form submission failed:", submitError.message);
       return;
     }
-    const { error, paymentIntent } = await stripe.confirmPayment({
+    const { error, paymentIntent } = await stripe.confirmPayment({  // Confirm the payment
       elements,
       confirmParams: {
-        return_url: `${window.location.origin}/payment-success?redirect_status=successful&sellerId=${sellerId}&amount=${amount}&ticketId=${ticketId}`,
+        return_url: `${window.location.origin}/payment-success?redirect_status=successful&sellerId=${sellerId}&amount=${amount}&ticketId=${ticketId}`, // Redirect URL
       },
     });
     if (error) {
@@ -79,7 +79,7 @@ const PaymentForm = ({ amount, sellerId, ticketId }) => {
   );
 };
 
-const PaymentPage = () => {
+const PaymentPage = () => {  // Payment page component
   const location = useLocation(); // Get state passed from navigation
   const { ticketId } = location.state || {}; // Destructure offerId from state
 
@@ -87,7 +87,7 @@ const PaymentPage = () => {
   const [clientSecret, setClientSecret] = useState("");
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
+  useEffect(() => {  // Fetch ticket details and create payment intent
     const fetchTicketDetails = async () => {
       try {
         console.log(ticketId);
@@ -107,7 +107,7 @@ const PaymentPage = () => {
               sellerId,
             },
           );
-          setClientSecret(paymentIntentResponse.data.clientSecret);
+          setClientSecret(paymentIntentResponse.data.clientSecret);  // Set the client secret
         }
 
         setLoading(false);
@@ -120,8 +120,8 @@ const PaymentPage = () => {
       }
     };
 
-    if (ticketId) {
-      fetchTicketDetails();
+    if (ticketId) {  // Check if offerId is defined
+      fetchTicketDetails();  // Fetch ticket details
     } else {
       console.error("offerId is undefined");
       setLoading(false);

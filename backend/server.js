@@ -8,7 +8,7 @@ const cookieParser = require('cookie-parser');
 const app = express();
 const port = process.env.PORT || 3000;
 
-app.use(cors({
+app.use(cors({ // Allow requests from the frontend
     origin: 'http://localhost:5173',
     credentials: true,
 }));
@@ -22,16 +22,16 @@ app.use('/api/tickets', require('./routes/ticketRoutes'));
 // Stripe routes
 app.use('/api/stripe', require('./routes/stripeRoutes'));
 
-const uri = process.env.MONGODB_URI;
+const uri = process.env.MONGODB_URI; // MongoDB connection string
 
-mongoose.connect(uri)
+mongoose.connect(uri) // Connect to MongoDB
 .then(() => {
-    console.log('Connected to MongoDB');
+    console.log('Connected to MongoDB'); // Log success message
 })
 .catch(err => {
-    console.error('Error connecting to MongoDB:', err);
+    console.error('Error connecting to MongoDB:', err); // Log error message
 });
 
 app.listen(port, () => {
-    console.log(`Server running on port ${port}`);
+    console.log(`Server running on port ${port}`); // Log success message
 });

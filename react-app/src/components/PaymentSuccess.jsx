@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import axiosInstance from "../api/axiosInstance";
 
-const PaymentSuccess = () => {
+const PaymentSuccess = () => {  // Payment success component
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const ticketId = queryParams.get("ticketId");
@@ -12,11 +12,11 @@ const PaymentSuccess = () => {
   );
   const redirectStatus = queryParams.get("redirect_status");
 
-  useEffect(() => {
-    const updateDataBase = async () => {
+  useEffect(() => {   // Update the database with the payment status
+    const updateDataBase = async () => {  // Update the database with the payment status
       console.log(ticketId);
       try {
-        const response = await axiosInstance.post(
+        const response = await axiosInstance.post(  // Send a request to update the ticket status
           "tickets/update-ticket-status",
           {
             ticketId,
