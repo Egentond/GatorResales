@@ -8,17 +8,17 @@ import gatorsWmsBasketball from "../assets/gators-womens-basketball.jpg";
 import { useNavigate } from "react-router-dom";
 
 const Home = () => {
-  const navigate = useNavigate();
+  const navigate = useNavigate();   // Use navigate hook to navigate to different routes
 
-  const filterTickets = (sport) => {
-    navigate(`/buy?sport=${encodeURIComponent(sport)}`);
+  const filterTickets = (sport) => {  // Filter tickets by sport
+    navigate(`/buy?sport=${encodeURIComponent(sport)}`);  // Navigate to the buy page with the sport as a query parameter
   };
 
   return (
     <>
       <div
         className="relative h-screen min-h-screen bg-cover bg-center"
-        style={{ backgroundImage: `url(${gatorCountry})` }}
+        style={{ backgroundImage: `url(${gatorCountry})` }}  // Set the background image
       >
         <div className="absolute inset-0 bg-black/40 backdrop-blur-sm"></div>
 
@@ -32,7 +32,7 @@ const Home = () => {
 
           <div className="align-middle text-center relative flex gap-8 mt-40 content-center justify-center">
             <div
-              onClick={() => filterTickets("football")}
+              onClick={() => filterTickets("football")}   // Filter tickets by football
               className="bg-white bg-opacity-80 p-4 rounded shadow-md w-80 transition ease-in-out delay-150 text-gatorsBlue hover:bg-gatorsBlue hover:scale-110 hover:text-white"
             >
               <p className="text-xl">Football</p>
@@ -40,7 +40,7 @@ const Home = () => {
             </div>
 
             <div
-              onClick={() => filterTickets("mens basketball")}
+              onClick={() => filterTickets("mens basketball")}  // Filter tickets by mens basketball
               className="bg-white bg-opacity-80 p-4 rounded shadow-md w-80 transition ease-in-out delay-75 text-gatorsBlue hover:bg-gatorsBlue hover:scale-110 hover:text-white"
             >
               <p className="text-xl">Mens Basketball</p>
@@ -48,7 +48,7 @@ const Home = () => {
             </div>
 
             <div
-              onClick={() => filterTickets("volleyball")}
+              onClick={() => filterTickets("volleyball")}  // Filter tickets by volleyball
               className="bg-white bg-opacity-80 p-4 rounded shadow-md w-80 transition ease-in-out delay-75 text-gatorsBlue hover:bg-gatorsBlue hover:scale-110 hover:text-white"
             >
               <p className="text-xl">Volleyball</p>
@@ -56,7 +56,7 @@ const Home = () => {
             </div>
 
             <div
-              onClick={() => filterTickets("womens basketball")}
+              onClick={() => filterTickets("womens basketball")}  // Filter tickets by womens basketball
               className="bg-white bg-opacity-80 p-4 rounded shadow-md w-80 transition ease-in-out delay-75 text-gatorsBlue hover:bg-gatorsBlue hover:scale-110 hover:text-white"
             >
               <p className="text-xl">Womens Basketball</p>

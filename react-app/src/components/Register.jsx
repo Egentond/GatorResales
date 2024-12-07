@@ -3,8 +3,8 @@ import axiosInstance from "../api/axiosInstance";
 import { useNavigate } from "react-router-dom";
 import gatorCountry from "../assets/gatorCountry.jpg";
 
-export default function Register() {
-  const [formData, setFormData] = useState({
+export default function Register() {  // Register component
+  const [formData, setFormData] = useState({  // Initialize form data
     firstName: "",
     lastName: "",
     email: "",
@@ -14,29 +14,29 @@ export default function Register() {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e) => {  // Handle input change
     const { name, value } = e.target;
-    setFormData((prevData) => ({ ...prevData, [name]: value }));
+    setFormData((prevData) => ({ ...prevData, [name]: value }));  // Update form data
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e) => {  // Handle form submission
     e.preventDefault();
     setError("");
 
-    if (formData.password !== formData.confirmPassword) {
-      setError("Passwords must match");
+    if (formData.password !== formData.confirmPassword) {  // Validate password
+      setError("Passwords must match"); // Set error message
       return;
     }
 
-    if (!formData.email.endsWith("@ufl.edu")) {
-      setError("You must have a valid UF email to register");
+    if (!formData.email.endsWith("@ufl.edu")) {  // Validate email
+      setError("You must have a valid UF email to register");  // Set error message
       return;
     }
 
     try {
-      const response = await axiosInstance.post("users/register", formData);
-      console.log("Registration successful:", response.data);
-      navigate("/");
+      const response = await axiosInstance.post("users/register", formData);  // Send registration request
+      console.log("Registration successful:", response.data);  // Log the response
+      navigate("/");  // Redirect to the home page
     } catch (error) {
       setError(error.response?.data?.message || "An error occurred.");
       console.error(error);

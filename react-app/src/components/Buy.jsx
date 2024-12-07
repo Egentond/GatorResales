@@ -14,7 +14,7 @@ const Buy = ({ loggedIn }) => {
   const sportFilter = queryParams.get("sport"); // Get the sport query parameter
 
   useEffect(() => {
-    const fetchTickets = async () => {
+    const fetchTickets = async () => {    // Fetch tickets
       try {
         // Append the sport query to your API request if it exists
         const url = sportFilter
@@ -41,17 +41,17 @@ const Buy = ({ loggedIn }) => {
     });
   };
 
-  const handleSort = (order) => {
+  const handleSort = (order) => {  // Sort tickets by price
     setSortOrder(order);
     setDropdownOpen(false);
-    const sortedTickets = [...tickets].sort((a, b) => {
-      if (order === "high-low") {
+    const sortedTickets = [...tickets].sort((a, b) => {  
+      if (order === "high-low") { 
         return b.price - a.price;
       } else {
         return a.price - b.price;
       }
     });
-    setTickets(sortedTickets);
+    setTickets(sortedTickets);  // Set the sorted tickets
   };
 
   return (
@@ -65,12 +65,12 @@ const Buy = ({ loggedIn }) => {
           <div className="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
           <div className="relative z-10 max-w-md w-full space-y-8 p-6 bg-white rounded-lg shadow-md">
             <div className="text-center">
-              <h1 className="text-3xl font-bold text-gray-800">Buy Tickets</h1>
+              <h1 className="text-3xl font-bold text-gray-800">Buy Tickets</h1>  
               <p className="mt-4 text-gray-600">
                 You must be logged in to buy tickets.
               </p>
               <button
-                onClick={() => navigate("/login")}
+                onClick={() => navigate("/login")}    // Go to the login page
                 className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"
               >
                 Login

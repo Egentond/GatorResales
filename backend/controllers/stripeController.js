@@ -1,55 +1,57 @@
 const User = require('../models/User');
 
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY); // Stripe secret key
 
-const createConnectedAccount = async (req, res) => {
+// Create a connected account
+const createConnectedAccount = async (req, res) => { 
     try {
-        const account = await stripe.accounts.create({
-            type: 'express',
-            country: 'US',
+        const account = await stripe.accounts.create({ // Create a Stripe account
+            type: 'express', // Account type
+            country: 'US', // Country
             email: req.body.email, // Seller's email
         });
-        res.status(200).send({ accountId: account.id });
+        res.status(200).send({ accountId: account.id }); // Send the account ID to the client
     } catch (error) {
-        res.status(400).send({ error: error.message });
+        res.status(400).send({ error: error.message }); // Send an error message to the client
     }
 }
 
-const createPaymentIntent = async (req, res) => {
+// Create a payment intent
+const createPaymentIntent = async (req, res) => { 
     const { price, sellerId } = req.body;
 
-    console.log(sellerId);
+    console.log(sellerId); // Log the seller ID
     try {
-        const { stripeAccountId } = await User.findById(sellerId);
+        const { stripeAccountId } = await User.findById(sellerId); // Find the seller's Stripe account ID
         // Create the payment intent without transfer
         const paymentIntent = await stripe.paymentIntents.create({
             amount: Math.round(price * 100), // amount in cents
             currency: 'usd',
-            automatic_payment_methods: {
+            automatic_payment_methods: { // Enable automatic payment methods
                 enabled: true,
             },
-            transfer_data: {
+            transfer_data: { // Transfer the payment to the seller's account
                 destination: stripeAccountId, 
             },
         });
 
-        res.status(200).json({ clientSecret: paymentIntent.client_secret });
+        res.status(200).json({ clientSecret: paymentIntent.client_secret }); // Send the client secret to the client
     } catch (error) {
         console.error('Error creating payment intent:', error);
-        res.status(500).json({ error: 'Failed to create payment intent' });
+        res.status(500).json({ error: 'Failed to create payment intent' }); // Send an error message to the client
     }
 };
 
 const handleWebhooks = async (req, res) => {
     const sig = req.headers['stripe-signature'];
-    const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
+    const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;    // Stripe webhook
 
     let event;
 
     try {
-        event = stripe.webhooks.constructEvent(req.rawBody, sig, webhookSecret);
+        event = stripe.webhooks.constructEvent(req.rawBody, sig, webhookSecret);  // Construct the event
     } catch (error) {
-        console.error('Webhook signature verification failed:', error.message);
+        console.error('Webhook signature verification failed:', error.message); 
         return res.status(400).send(`Webhook Error: ${error.message}`);
     }
 

@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const User = require('./User');
 const bcrypt = require('bcryptjs');
 
-const ticketSchema = new mongoose.Schema({
+const ticketSchema = new mongoose.Schema({  // Define the ticket schema
     sellerId: {type: String, required: true},
     sellerEmail: {type: String},
     buyer: {type: String},

@@ -1,4 +1,4 @@
-const Footer = () => {
+const Footer = () => {  // Footer component
   return (
     <>
       <div className="bg-gatorsBlue">

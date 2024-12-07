@@ -5,9 +5,9 @@ const Menu = ({ loggedIn, setLoggedIn }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const handleLogout = async () => {
+  const handleLogout = async () => {  // Handle logout
     try {
-      const response = await axiosInstance.post("/users/logout");
+      const response = await axiosInstance.post("/users/logout");  // Send logout request
       console.log("successfully logged out");
       localStorage.removeItem("loggedIn"); // Remove login state from localStorage
       setLoggedIn(false);
@@ -17,9 +17,9 @@ const Menu = ({ loggedIn, setLoggedIn }) => {
     }
   };
 
-  const handleLogoClick = () => {
-    if (location.pathname !== "/") {
-      navigate("/");
+  const handleLogoClick = () => {  // Handle logo click
+    if (location.pathname !== "/") {  // Check if the user is not on the home page
+      navigate("/");  // Navigate to the home page
     }
   };
 
@@ -39,7 +39,7 @@ const Menu = ({ loggedIn, setLoggedIn }) => {
           <li className="rounded-md transition delay-75 ease-in hover:bg-blue-700 p-3">
             <Link to="/sell">Sell</Link>
           </li>
-          {!loggedIn ? (
+          {!loggedIn ? ( // Check if the user is not logged in
             <>
               <li className="rounded-md transition delay-75 ease-in hover:bg-blue-700 p-3">
                 <Link to="/login">Sign in</Link>
@@ -48,7 +48,7 @@ const Menu = ({ loggedIn, setLoggedIn }) => {
                 <Link to="/register">Register</Link>
               </li>
             </>
-          ) : (
+          ) : (  // If the user is logged in
             <li className="rounded-md transition delay-75 ease-in hover:bg-gatorsOrange p-3">
               <button onClick={handleLogout}>Logout</button>
             </li>
